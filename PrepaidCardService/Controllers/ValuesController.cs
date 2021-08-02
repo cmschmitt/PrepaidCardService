@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PrepaidCardService.Externals;
+using PrepaidCardService.Interfaces;
 
 namespace PrepaidCardService.Controllers
 {
@@ -10,6 +12,12 @@ namespace PrepaidCardService.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly BalanceInquiryServiceFactory _balanceInquiryServiceFactory;
+
+        public ValuesController(BalanceInquiryServiceFactory balanceInquiryServiceFactory)
+        {
+            _balanceInquiryServiceFactory = balanceInquiryServiceFactory;
+        }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -17,29 +25,20 @@ namespace PrepaidCardService.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        //https://localhost:44382/api/values/balance?providerName=first&accountNumber=1
+        [HttpGet("balance")]
+        public ActionResult<decimal> Get(string providerName, int accountNumber)
         {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            switch (providerName)
+            {
+                case "first":
+                    IBalanceInquiryService<IFirst> balanceInquiryService1 = _balanceInquiryServiceFactory.CreateGeneric<IFirst>();
+                    return balanceInquiryService1.GetBalance(accountNumber);
+                case "second":
+                    IBalanceInquiryService<ISecond> balanceInquiryService2 = _balanceInquiryServiceFactory.CreateGeneric<ISecond>();
+                    return balanceInquiryService2.GetBalance(accountNumber);
+            }
+            return 0;
         }
     }
 }
