@@ -12,11 +12,11 @@ namespace PrepaidCardService.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly BalanceInquiryServiceFactory _balanceInquiryServiceFactory;
+        private readonly IPrepaidCardService _prepaidCardService;
 
-        public ValuesController(BalanceInquiryServiceFactory balanceInquiryServiceFactory)
+        public ValuesController(IPrepaidCardService prepaidCardService)
         {
-            _balanceInquiryServiceFactory = balanceInquiryServiceFactory;
+            _prepaidCardService = prepaidCardService;
         }
         // GET api/values
         [HttpGet]
@@ -29,16 +29,7 @@ namespace PrepaidCardService.Controllers
         [HttpGet("balance")]
         public ActionResult<decimal> Get(string providerName, int accountNumber)
         {
-            switch (providerName)
-            {
-                case "first":
-                    IBalanceInquiryService<IFirst> balanceInquiryService1 = _balanceInquiryServiceFactory.CreateGeneric<IFirst>();
-                    return balanceInquiryService1.GetBalance(accountNumber);
-                case "second":
-                    IBalanceInquiryService<ISecond> balanceInquiryService2 = _balanceInquiryServiceFactory.CreateGeneric<ISecond>();
-                    return balanceInquiryService2.GetBalance(accountNumber);
-            }
-            return 0;
+            return _prepaidCardService.GetBalance(providerName, accountNumber);
         }
     }
 }

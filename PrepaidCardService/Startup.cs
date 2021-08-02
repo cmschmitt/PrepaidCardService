@@ -31,7 +31,7 @@ namespace PrepaidCardService
 
             services.AddScoped<IBalanceInquiryService<IFirst>, FirstBalanceInquiryService>();
             services.AddScoped<IBalanceInquiryService<ISecond>, SecondBalanceInquiryService>();
-
+            services.AddScoped<IPrepaidCardService, PrepaidCardService>();
             services.AddSingleton(new BalanceInquiryServiceFactory(services.BuildServiceProvider()));
         }
 
