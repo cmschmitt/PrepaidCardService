@@ -10,7 +10,7 @@ namespace PrepaidCardService.Externals
     {
         public decimal GetBalance(int accountNumber)
         {
-            return 10;
+            return 1;
         }
     }
 

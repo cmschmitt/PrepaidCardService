@@ -29,6 +29,8 @@ namespace PrepaidCardService
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddScoped<IFirst, First>();
+            services.AddScoped<ISecond, Second>();
             services.AddScoped<IBalanceInquiryService<IFirst>, FirstBalanceInquiryService>();
             services.AddScoped<IBalanceInquiryService<ISecond>, SecondBalanceInquiryService>();
             services.AddScoped<IPrepaidCardService, PrepaidCardService>();
