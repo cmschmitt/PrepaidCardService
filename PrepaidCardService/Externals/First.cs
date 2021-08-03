@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PrepaidCardService.Externals
+﻿namespace PrepaidCardService.Externals
 {
     //NOTE: this would be external code referenced through 3rd party dlls
     public class First : IFirst

@@ -1,13 +1,10 @@
 ﻿using PrepaidCardService.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace PrepaidCardService
 {
-    public class BalanceInquiryServiceFactory
+    public class BalanceInquiryServiceFactory : IBalanceInquiryServiceFactory
     {
         private IServiceProvider _serviceProvider;
         public BalanceInquiryServiceFactory(IServiceProvider serviceProvider)
@@ -16,5 +13,10 @@ namespace PrepaidCardService
         }
 
         public IBalanceInquiryService<T> CreateGeneric<T>() => _serviceProvider.GetService<IBalanceInquiryService<T>>();
+    }
+
+    public interface IBalanceInquiryServiceFactory
+    {
+        IBalanceInquiryService<T> CreateGeneric<T>();
     }
 }

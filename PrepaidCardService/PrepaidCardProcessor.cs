@@ -3,10 +3,10 @@ using PrepaidCardService.Interfaces;
 
 namespace PrepaidCardService
 {
-    public class PrepaidCardService : IPrepaidCardService
+    public class PrepaidCardProcessor : IPrepaidCardService
     {
-        private readonly BalanceInquiryServiceFactory _balanceInquiryServiceFactory;
-        public PrepaidCardService(BalanceInquiryServiceFactory balanceInquiryServiceFactory)
+        private readonly IBalanceInquiryServiceFactory _balanceInquiryServiceFactory;
+        public PrepaidCardProcessor(IBalanceInquiryServiceFactory balanceInquiryServiceFactory)
         {
             _balanceInquiryServiceFactory = balanceInquiryServiceFactory;
         }
